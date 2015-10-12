@@ -1,0 +1,13 @@
+{
+    "name": "martybel/wp-content-url-rewrite",
+    "description": "Wordpress plugin that rewrites url's for easier move between domains",
+    "type": "wordpress-muplugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Peter Eussen",
+            "email": "peter.eussen@harperjones.nl"
+        }
+    ],
+    "require": {}
+}
