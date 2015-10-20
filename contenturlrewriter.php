@@ -53,7 +53,7 @@ class ContentUrlRewriter
    public function register()
    {
       // Only rewrite when we are on another domain.. otherwise this just does not make sense
-      if ( $this->originalDomain !== $this->newDomain ) {
+      if ( is_array($this->originaldomain) || $this->newDomain !== $this->originalDomain ) {
          \add_filter('the_content',[$this,'rewriteUrls'],99);
          \add_filter('get_the_excerpt',[$this,'rewriteUrls'],99);
       }
