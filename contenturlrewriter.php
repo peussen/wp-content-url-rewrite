@@ -56,7 +56,34 @@ class ContentUrlRewriter
       if ( is_array($this->originalDomain) || $this->newDomain !== $this->originalDomain ) {
          \add_filter('the_content',[$this,'rewriteUrls'],99);
          \add_filter('get_the_excerpt',[$this,'rewriteUrls'],99);
+         \add_filter('acf/load_value', [$this,'recursiveRewrite'],99);
       }
+   }
+
+
+   /**
+    * Recursively replace content
+    *
+    * @param $content
+    * @return array|string
+    */
+   public function recursiveRewrite($content)
+   {
+      if ( is_array($content)) {
+         foreach( $content as $idx => $field ) {
+            $content[$idx] = $this->recursiveRewrite($field);
+         }
+      } elseif ( is_object($content)) {
+         $vars = get_object_vars($content);
+
+         foreach( $vars as $id => $attr ) {
+            $content->$id = $this->recursiveRewrite($attr);
+         }
+      } elseif ( is_string($content)) {
+         $content = $this->rewriteUrls($content);
+      }
+
+      return $content;
    }
 
    /**
